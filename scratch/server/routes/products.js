@@ -13,5 +13,30 @@ router.get('/', (req, res) => {
     res.json(products);
 });
 
+router.get('/search', (req, res) => {
+    const searchRes = req.query.name;
+    let found = products.find(element => element.name === searchRes);
+    if(found){
+        res.json(found);
+    }else{
+        res.status(404).json("error");
+    }
+});
+
+router.get('/:id', (req, res) => {
+    const productsId = req.params.id;
+    res.json(products[productsId]);
+});
+
+router.post('/', (req, res) => {
+    const newProduct = req.body;
+    products.push(newProduct);
+    res.send(newProduct);
+});
+
+router.put('/:id', (req, res) => {
+    const updatedProduct = req.body;
+    res.json(updatedProduct);
+});
 
 module.exports = router;
