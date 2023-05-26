@@ -20,18 +20,25 @@ router.get('/search', (req, res) => {
         res.json(found);
     }else{
         res.status(404).json("error");
-    }
+    };
 });
 
 router.get('/:id', (req, res) => {
     const productsId = req.params.id;
-    res.json(products[productsId]);
+    let foundId = products.find(element => element.id == productsId);
+    if(foundId){
+        res.json(foundId)
+    }else{
+        res.status(404).json("error id not found");
+    };
+   
 });
 
 router.post('/', (req, res) => {
     const newProduct = req.body;
     products.push(newProduct);
     res.send(newProduct);
+    
 });
 
 router.put('/:id', (req, res) => {
