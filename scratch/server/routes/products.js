@@ -15,21 +15,23 @@ router.get('/', (req, res) => {
 
 router.get('/search', (req, res) => {
     const searchRes = req.query.name;
-    let found = products.find(element => element.name === searchRes);
-    if(found){
-        res.json(found);
+    let foundName = products.find(element => element.name === searchRes);
+
+    if(foundName){
+        res.json(foundName);
     }else{
-        res.status(404).json("error");
+        res.status(404).json({ message: "error" });
     };
 });
 
 router.get('/:id', (req, res) => {
-    const productsId = req.params.id;
-    let foundId = products.find(element => element.id == productsId);
+    const productId = req.params.id;
+    let foundId = products.find(element => element.id == productId);
+
     if(foundId){
-        res.json(foundId)
+        res.json(foundId);
     }else{
-        res.status(404).json("error id not found");
+        res.status(404).json({ message: "error id not found" });
     };
    
 });
@@ -42,8 +44,22 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    const updatedProduct = req.body;
-    res.json(updatedProduct);
+    const newId = req.params.productId;
+    const newDetails = req.body;
+
+    const product = products.find(element => element.id === parseInt(newId));
+
+    if(product){
+        product.name = newDetails.name;
+        product.price = newDetails.price;
+        res.status(200).json({ message: 'Product updated successfully' });
+
+    }else {
+        res.status(404).json({ message: 'Product not found' });
+    };
+
+    
+
 });
 
 module.exports = router;
