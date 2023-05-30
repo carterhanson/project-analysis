@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.get('/search', (req, res) => {
     const searchRes = req.query.name;
-    let foundName = products.find(element => element.name === searchRes);
+    let foundName = products.find(prod => prod.name === searchRes);
 
     if(foundName){
         res.json(foundName);
@@ -26,7 +26,7 @@ router.get('/search', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const productId = req.params.id;
-    let foundId = products.find(element => element.id == productId);
+    let foundId = products.find(prod => prod.id == productId);
 
     if(foundId){
         res.json(foundId);
@@ -38,28 +38,23 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     const newProduct = req.body;
+    newProduct.id = products.length + 1;
     products.push(newProduct);
     res.send(newProduct);
-    
 });
 
 router.put('/:id', (req, res) => {
-    const newId = req.params.productId;
+    const newId = req.params.id;
     const newDetails = req.body;
 
-    const product = products.find(element => element.id === parseInt(newId));
+    let updatedProduct = products.find(prod => prod.id == newId);
 
-    if(product){
-        product.name = newDetails.name;
-        product.price = newDetails.price;
-        res.status(200).json({ message: 'Product updated successfully' });
-
+    if(updatedProduct){
+        updatedProduct.name = newDetails.name;
+        updatedProduct.price = newDetails.price;
     }else {
         res.status(404).json({ message: 'Product not found' });
-    };
-
-    
-
+    }
 });
 
 module.exports = router;
