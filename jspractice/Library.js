@@ -8,7 +8,7 @@ class Library{
         this.books.push(book);
     }
 
-    getAllBooks(){
+    getBooks(){
         return this.books;
     }
 
@@ -52,10 +52,13 @@ class Library{
     }
 
     compareTwoBooks(bookOne, bookTwo){
-
+        return (bookOne.numPages > bookTwo.numPages ? bookOne : bookTwo);
     }
 
     addMultipleBooks(booksArr){
+        for(let i = 0; i < booksArr; i++){
+            this.books.push(booksArr);
+        }
         
     }
 
