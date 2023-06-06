@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Delete Book</title>
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a class="navbar-brand" href="index.html">BookApp</a>
+<div class="collapse navbar-collapse">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item">
+<a class="nav-link" href="search.html">Search</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="add.html">Add</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="update.html">Update</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="delete.html">Delete</a>
+</li>
+</ul>
+</div>
+</nav>
+<div class="container">
+<h1>Delete Book</h1>
+<form id="delete-form" onsubmit="submitForm(event)">
+<div class="form-group">
+<label for="book-id">ID</label>
+<input type="number" id="book-id" class="form-control"
+placeholder="Enter book ID">
+</div>
+<button type="submit" class="btn btn-primary">Delete</button>
+</form>
+<div id="delete-results"></div>
+</div>
+<script>
+/* function declarations */
+/* setup and function calls */
+</script>
+</body>
+</html>
