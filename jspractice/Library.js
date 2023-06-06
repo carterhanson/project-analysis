@@ -41,13 +41,14 @@ class Library{
     }
 
     updateBook(title, bookDataObj){
-        let found = this.books.find(element => element.title == title);
+        let found = this.findBookByTitle(title);
         found.title = bookDataObj.title;
         found.author = bookDataObj.author;
         this.books.push(found);
     }
 
     findMostPopularAuthor(){
+        
         
     }
 
@@ -56,8 +57,8 @@ class Library{
     }
 
     addMultipleBooks(booksArr){
-        for(let i = 0; i < booksArr; i++){
-            this.books.push(booksArr);
+        for(let i = 0; i < booksArr.length; i++){
+            this.addBook(booksArr[i]);
         }
         
     }
