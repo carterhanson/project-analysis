@@ -48,8 +48,20 @@ class Library{
     }
 
     findMostPopularAuthor(){
-        
-        
+        let authorCount = [1];
+        let mostBooks = 0;
+        let mostPopularAuthor = null;
+
+        this.books.forEach(book => {
+            let author = book.author;
+            if(authorCount.length > mostBooks){
+                mostBooks = authorCount.length;
+                mostPopularAuthor = author;
+            }
+
+        })
+       
+        return mostPopularAuthor;
     }
 
     compareTwoBooks(bookOne, bookTwo){
@@ -60,7 +72,6 @@ class Library{
         for(let i = 0; i < booksArr.length; i++){
             this.addBook(booksArr[i]);
         }
-        
     }
 
     saveToLocalStorage() {
@@ -72,6 +83,10 @@ class Library{
         //nothing there yet, then an empty array is returned. That is what
         //the || [] is doing.
         this.books = JSON.parse(localStorage.getItem('libraryBooks')) || [];
+    }
+
+    getItemFromLocalStorage(){
+        localStorage.getItem('libraryBooks', JSON.stringify(this.books));
     }
         
 }

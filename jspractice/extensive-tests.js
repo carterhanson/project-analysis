@@ -71,7 +71,8 @@ library.updateBook(book2.title, newBookData);
 testResults.push(library.findBookByTitle('Nineteen Eighty-Four').author === 'Eric Arthur Blair'); // true
 
 // Test 11: Find the most popular author
-// testResults.push(library.findMostPopularAuthor() === 'Aldous Huxley'); // true
+testResults.push(library.findMostPopularAuthor() === 'Aldous Huxley'); // true
+// console.log(library.findMostPopularAuthor());
 
 // Test 12: Compare two books
 testResults.push(library.compareTwoBooks(book1, book2) === book1); // true
