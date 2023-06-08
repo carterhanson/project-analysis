@@ -40,17 +40,9 @@
                 placeholder="Enter author's name">
             </div>
             <div class="form-group">
-            <label for="numPages">Number of Pages</label>
-            <input type="number" id="numPages" class="form-control"
-            placeholder="Enter number of pages">
-            </div>
-            <div class="form-group">
-                <label for="dueDate">Due Date</label>
-                <input type="date" id="dueDate" class="form-control">
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="isCheckedOut">
-                <label class="form-check-label" for="isCheckedOut">Checked Out</label>
+                <label for="numPages">price</label>
+                <input type="number" id="price" class="form-control"
+                placeholder="Enter number for price">
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
@@ -58,7 +50,41 @@
     </div>
     <script>
     /* function declarations */
+    function submitForm(event){
+        event.preventDefault();
+        const newBook = getFormData();
+        sendData(newBook);
+    }
+
+    function getFormData(){
+        return {
+            title: form.title.value,
+            author: form.author.value,
+            price: form.price.value,
+        };
+    }
+
+    function updateUI(data){
+        addResults.textContent = JSON.stringify(data);
+    }
+
+    function sendData(data){
+        fetch('/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateUI(data);
+        })
+    }
     /* setup and function calls */
+    const addResults = document.getElementById("add-results");
+    const form = document.getElementById("add-form");
+    form.reset();
     </script>
 </body>
 </html>

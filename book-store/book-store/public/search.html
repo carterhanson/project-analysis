@@ -40,7 +40,28 @@
     </div>
     <script>
     /* function declarations */
+    function updateUI(data){
+        searchResults.textContent = JSON.stringify(data);
+    }
+
+    function search(title){
+        fetch(`/books/search?title=${title}`)
+            .then(response => response.json())
+            .then(book => {
+                updateUI(book);
+        });
+    }
+
+    function submitForm(event){
+        event.preventDefault();
+        const title = form.title.value;
+        search(title);
+        form.reset();
+    }
     /* setup and function calls */
+    const searchResults = document.getElementById("search-results");
+    const form = document.getElementById("search-form");
+    
     </script>
 </body>
 </html>

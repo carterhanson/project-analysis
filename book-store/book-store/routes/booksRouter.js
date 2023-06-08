@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 router.get('/search', (req, res) => {
     const searchRes = req.query.title;
-    let foundTitle = books.find(prod => prod.title === searchRes);
+    let foundTitle = books.find(book => book.title === searchRes);
 
     if(foundTitle){
         res.json(foundTitle);
@@ -30,13 +30,27 @@ router.get('/search', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const bookId = req.params.id;
-    let foundId = books.find(prod => prod.id === bookId);
-
+    let foundId = books.find(book => book.id === bookId);
+    
     if(foundId){
         res.json(foundId);
     }else{
         res.status(404).json({ message: "error" });
     }
+})
+
+router.post('/', (req, res) => {
+    const newBook = req.body;
+    newBook.id = books.length + 1;
+    books.push(newBook);
+    fs.writeFile(booksFile, JSON.stringify(books), (err) => {
+        if(err){
+            console.log('error writing to fle', err);
+        }else{
+            console.log('successfully wrote file');
+        }
+    })
+    res.status(201).json({ success: true, message: "book created successfully"});
 })
 
 module.exports = router;

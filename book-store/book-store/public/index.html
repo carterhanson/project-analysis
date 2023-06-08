@@ -41,11 +41,11 @@
 
     function getData(){
         fetch('http://localhost:3000/books')
-        .then(response => response.json())
-        .then(books => {
-            books.forEach(indivBook => {
-               updateUi(indivBook);
-            });
+            .then(response => response.json())
+            .then(books => {
+                books.forEach(indivBook => {
+                updateUi(indivBook);
+                });
         });
     }
     /* setup and function calls */
