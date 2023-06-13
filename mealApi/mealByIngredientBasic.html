@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meal by Ingredient</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand text-white" href="index.html">Meals</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByCategoryBasic.html">Meal By Category (Basic)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByCategoryElegant.html">Meal By Category (Elegant)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByIngredientBasic.html">Meal By Ingredient (Basic)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByIngredientElegant.html">Meal By Ingredient (Elegant)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByAreaBasic.html">Meal By Area (Basic)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="mealByAreaElegant.html">Meal By Area (Elegant)</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h1 class="text-center mb-4">Meal by Ingredient</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form onsubmit="getMealsByIngredient();" class="form-inline mb-4 justify-content-center">
+                    <label for="ingredientInput" class="mr-2">Ingredient:</label>
+                    <input type="text" name="ingredientInput" id="ingredientInput" class="form-control mr-2" required>
+                    <button type="submit" class="btn btn-primary">Get Meals</button>
+                </form>
+            </div>
+        </div>
+
+        <ul id="meal-list">
+            <!-- Meal list will be inserted here by JavaScript -->
+        </ul>
+    </div>
+
+    <script>
+        /* function declarations */
+
+				/* setup and function calls */
+    </script>
+</body>
+</html>
