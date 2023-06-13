@@ -3,8 +3,8 @@
 <head>
     <title>Book List</title>
     <!-- Add Bootstrap CSS -->
-    <link rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" 
+					href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,6 +13,9 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="book.html">Single Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="add.html">Add</a>
@@ -26,33 +29,36 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <h1>Book List</h1>
         <ul id="book-list"></ul>
     </div>
+
     <script>
-    /* function declarations */
+         /* function declarations */
 
-    function updateUi(book){
-        const listItem = document.createElement("li");
-        listItem.textContent = book.title;
-        bookList.appendChild(listItem);
-    }
+        function updateUi(book){
+            const listItem = document.createElement("li");
+            listItem.textContent = book.title;
+            bookList.appendChild(listItem);
+        }
 
-    function getData(){
-        fetch('http://localhost:3000/books')
-            .then(response => response.json())
-            .then(books => {
-                books.forEach(indivBook => {
-                updateUi(indivBook);
-                });
-        });
-    }
-    /* setup and function calls */
+        function getData(){
+            fetch('http://localhost:3000/books')
+                .then(response => response.json())
+                .then(books => {
+                    books.forEach(indivBook => {
+                    updateUi(indivBook);
+                    });
+            });
+        }
+        /* setup and function calls */
 
-    const bookList = document.getElementById("book-list");
-    getData();
-    
+        const bookList = document.getElementById("book-list");
+        getData();
+
+
     </script>
 </body>
 </html>

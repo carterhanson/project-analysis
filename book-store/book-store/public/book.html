@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Book List</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">BookApp</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="book.html">Single Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add.html">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="update.html">Update</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="delete.html">Delete</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Single Book</h1>
+        <form id="single-book-form" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label for="book-id">Titles</label>
+                <select name="bookSelect" id="book-select" class="custom-select">
+                    <!-- Categories will be added here by JavaScript -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Get</button>
+        </form>
+        <br />
+        <div id="results"></div>
+    </div>
+
+    <script>
+
+        /* function declarations */       
+        function populateDropdown(book){
+            let option = document.createElement('option');
+            option.value = book.id
+            option.textContent = book.title
+            bookSelect.appendChild(option);
+        }
+
+        function updateUI(book){
+            //clear previous results
+            resultsDiv.innerHTML = '';
+            
+            let title = document.createElement('h2');
+            let author = document.createElement('p');
+
+            //add data to elements
+            title.textContent = book.title;
+            author.textContent = "Author: " + book.author;
+  
+            //add to div
+            resultsDiv.appendChild(title);
+            resultsDiv.appendChild(author);
+
+        }
+
+        function getData(){
+            fetch('http://localhost:3000/books')
+                .then(response => response.json())
+                .then(books => {                          
+                    books.forEach(book => {
+                        populateDropdown(book);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function sendRequest(id){
+            fetch(`http://localhost:3000/books/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                updateUI(data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+         
+        function submitForm(event){
+            event.preventDefault();
+            sendRequest(bookSelect.value);
+        }
+
+        /* setup and function calls */
+        const form = document.getElementById("single-book-form");
+        const bookSelect = document.getElementById("book-select");
+        const resultsDiv = document.getElementById("results");
+        
+        getData();
+
+    </script>
+</body>
+</html>

@@ -30,10 +30,10 @@ router.get('/search', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const bookId = req.params.id;
-    let foundId = books.find(book => book.id === bookId);
-    
-    if(foundId){
-        res.json(foundId);
+    let found = books.find(book => book.id == bookId);
+
+    if(found){
+        res.json(found);
     }else{
         res.status(404).json({ message: "error" });
     }
@@ -51,6 +51,21 @@ router.post('/', (req, res) => {
         }
     })
     res.status(201).json({ success: true, message: "book created successfully"});
+})
+
+router.put('/:id', (req, res) => {
+    const newId = req.params.id;
+    const newDetails = req.body;
+
+    let updatedBook = books.find(book => book.id == newId);
+
+    if(updatedBook){
+        updatedBook.title = newDetails.title;
+        updatedBook.author = newDetails.author;
+        updatedBook.price = newDetails.price;
+    }else{
+        res.status(404).json({ message: "book not found"});
+    }
 })
 
 module.exports = router;
