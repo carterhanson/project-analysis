@@ -53,8 +53,57 @@
 
     <script>
         /* function declarations */
+        function getMealDetails(){
+            let selectedMeal = mealSelect.value;
+            console.log(selectedMeal)
+            // fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedMeal}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         updateUI(data);
+            //     })
+        }
 
-				/* setup and function calls */
+        function updateUI(meal){
+            mealDetails.innerHTML = '';
+
+            let name = document.createElement('h2');
+            let image = document.createElement('img');
+            let content = document.createElement('p');
+
+            name.textContent = meal.strMeal;
+            image.src = meal.strMealThumb;
+            content.textContent = meal.strInstructions;
+        }
+
+        function populateDropdown(meal){
+            let option = document.createElement('option');
+            option.value = meal.idMeal;
+            option.textContent = meal.strMeal;
+            mealSelect.appendChild(option)
+        }
+
+        function getData(){
+            let numberOfMeals = 10;
+
+            for(let i = 0; i < numberOfMeals; i++){
+                fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+                .then(response => response.json())
+                .then(data => {
+                    let meals = data.meals[0];
+                        populateDropdown(meals)
+                    
+                })
+                .catch(error => console.error('Error:', error))  
+            }
+            
+        }
+		/* setup and function calls */
+        const form = document.getElementById("meal-form");
+        const mealSelect = document.getElementById("mealSelect");
+        const mealDetails = document.getElementById("meal-details");
+
+        getData();
+        getMealDetails();
     </script>
 </body>
 </html>
