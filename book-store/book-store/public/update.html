@@ -52,26 +52,50 @@
     <script>
 
         /* function declarations */
+        function handleSelection(id){
+        }
+
+        function updateUI(data){
+            updateResults.innerHTML = '';
+
+            let title = document.createElement('p');
+            let price = document.createElement('p');
+
+            title.textContent = data.title;
+            price.textContent = data.price;
+
+        }
+
+
         function getData(){
             fetch('http://localhost:3000/books')
                 .then(response => response.json())
                 .then(books => {
+                    booksArr = books;
                     books.forEach(indivBook => {
-                    updateUi(indivBook);
+                        populateDropdown(indivBook);
                     });
             });
         }
+
         function populateDropdown(book){
             let option = document.createElement('option');
+            option.value = book.id;
             option.textContent = book.id
             dropdownForm.appendChild(option);
+        }
+
+        function submitForm(event){
+            event.preventDefault();
+            handleSelection(dropdownForm.value);
         }
 
        /* setup and function calls */
        const form = document.getElementById("update-form");
        const dropdownForm = document.getElementById("book-id-dropdown");
        const updateResults = document.getElementById("update-results");
-       let books = [];
+       let booksArr = [];
+       getData();
 
     </script>
 </body>

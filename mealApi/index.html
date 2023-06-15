@@ -36,7 +36,7 @@
     <div class="container my-4">
         <h1 class="text-center mb-4">Meal by Name</h1>
 
-        <form id="meal-form" class="row justify-content-center" onsubmit="getMealDetails();">
+        <form id="meal-form" class="row justify-content-center" onsubmit="getMealDetails(event)">
             <div class="col-md-6">
                 <select name="mealSelect" id="mealSelect" class="form-control mb-2">
                     <!-- Options will be added here by JavaScript -->
@@ -53,14 +53,16 @@
 
     <script>
         /* function declarations */
-        function getMealDetails(){
+        function getMealDetails(event){
+            event.preventDefault();
             let selectedMeal = mealSelect.value;
             console.log(selectedMeal)
-            // fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedMeal}`)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         updateUI(data);
-            //     })
+            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedMeal}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateUI(data);
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         function updateUI(meal){
@@ -73,11 +75,15 @@
             name.textContent = meal.strMeal;
             image.src = meal.strMealThumb;
             content.textContent = meal.strInstructions;
+
+            mealDetails.appendChild(name);
+            mealDetails.appendChild(image);
+            mealDetails.appendChild(content);
         }
 
         function populateDropdown(meal){
             let option = document.createElement('option');
-            option.value = meal.idMeal;
+            option.value = meal.strMeal;
             option.textContent = meal.strMeal;
             mealSelect.appendChild(option)
         }
@@ -103,7 +109,6 @@
         const mealDetails = document.getElementById("meal-details");
 
         getData();
-        getMealDetails();
     </script>
 </body>
 </html>
