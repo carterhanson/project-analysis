@@ -60,25 +60,19 @@
             fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedMeal}`)
                 .then(response => response.json())
                 .then(data => {
-                    updateUI(data);
+                    let meal = data.meals[0]; 
+
+                    updateUI(meal);
                 })
                 .catch(error => console.error('Error:', error));
         }
 
         function updateUI(meal){
-            mealDetails.innerHTML = '';
-
-            let name = document.createElement('h2');
-            let image = document.createElement('img');
-            let content = document.createElement('p');
-
-            name.textContent = meal.strMeal;
-            image.src = meal.strMealThumb;
-            content.textContent = meal.strInstructions;
-
-            mealDetails.appendChild(name);
-            mealDetails.appendChild(image);
-            mealDetails.appendChild(content);
+            mealDetails.innerHTML = `
+                <h2>${meal.strMeal}</h2>
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+                <p>${meal.strInstructions}</p>
+            `;
         }
 
         function populateDropdown(meal){
