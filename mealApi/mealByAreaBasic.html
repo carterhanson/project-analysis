@@ -13,21 +13,10 @@
                     <a class="nav-link text-white" href="mealByCategoryBasic.html">Meal By Category (Basic)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByCategoryElegant.html">Meal By Category (Elegant)</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link text-white" href="mealByIngredientBasic.html">Meal By Ingredient (Basic)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByIngredientElegant.html">Meal By Ingredient (Elegant)</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link text-white" href="mealByAreaBasic.html">Meal By Area (Basic)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByAreaElegant.html">Meal By Area (Elegant)</a>
                 </li>
             </ul>
         </div>
@@ -56,7 +45,33 @@
     <script>
         /* function declarations */
 
+        function populateDropdown(meal){
+            let option = document.createElement('option');
+            option.value = meal.strArea;
+            option.textContent = meal.strArea;
+            areaSelect.appendChild(option)
+        }
+
+        function getData(){
+            let numberOfAreas = 28;
+
+            for(let i = 0; i < numberOfAreas; i++){
+                fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+                .then(response => response.json())
+                .then(data => {
+                    populateDropdown(data.meals[i])
+                })
+                .catch(error => console.error('Error:', error))  
+            }
+        }
+
+        function getMealsByArea(){
+            
+        }
 				/* setup and function calls */
+        
+        const areaSelect = document.getElementById("areaSelect");
+        getData();
     </script>
 </body>
 </html>

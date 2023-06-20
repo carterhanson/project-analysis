@@ -13,21 +13,10 @@
                     <a class="nav-link text-white" href="mealByCategoryBasic.html">Meal By Category (Basic)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByCategoryElegant.html">Meal By Category (Elegant)</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link text-white" href="mealByIngredientBasic.html">Meal By Ingredient (Basic)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByIngredientElegant.html">Meal By Ingredient (Elegant)</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link text-white" href="mealByAreaBasic.html">Meal By Area (Basic)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="mealByAreaElegant.html">Meal By Area (Elegant)</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +50,6 @@
                 .then(response => response.json())
                 .then(data => {
                     let meal = data.meals[0]; 
-
                     updateUI(meal);
                 })
                 .catch(error => console.error('Error:', error));
@@ -89,9 +77,7 @@
                 fetch('https://www.themealdb.com/api/json/v1/1/random.php')
                 .then(response => response.json())
                 .then(data => {
-                    let meals = data.meals[0];
-                        populateDropdown(meals)
-                    
+                    populateDropdown(data.meals[0])
                 })
                 .catch(error => console.error('Error:', error))  
             }
