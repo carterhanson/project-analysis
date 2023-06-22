@@ -28,7 +28,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form id="category-form" onsubmit="getMealsByCategory();">
+                <form id="category-form" onsubmit="getMealsByCategory(event);">
                     <div class="input-group mb-4">
                         <select name="categorySelect" id="categorySelect" class="custom-select">
                             <!-- Categories will be added here by JavaScript -->
@@ -48,8 +48,47 @@
 
     <script>
 			/* function declarations */
+            function getData(){
+                fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.meals.forEach(meal => {
+                            populateDropdown(meal);
+                        })
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
 
+            function updateUI(category){
+                const listItem = document.createElement("li");
+                listItem.textContent = category.strMeal;
+                mealList.appendChild(listItem);
+            }
+
+            function populateDropdown(meal){
+                let option = document.createElement('option');
+                option.value = meal.strCategory;
+                option.textContent = meal.strCategory;
+                categorySelect.appendChild(option)
+            }
+
+            function getMealsByCategory(event){
+                event.preventDefault();
+                const selectedCategory = categorySelect.value;
+                fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.meals.forEach(meal => {
+                            updateUI(meal);
+                        })
+                    })
+            }
 			/* setup and function calls */
+
+            const form = document.getElementById("category-form");
+            const categorySelect = document.getElementById("categorySelect");
+            const mealList = document.getElementById("meal-list");
+            getData();
     </script>
 </body>
 </html>

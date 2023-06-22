@@ -27,7 +27,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form onsubmit="getMealsByArea();" class="form-inline mb-4 justify-content-center">
+                <form onsubmit="getMealsByArea(event);" class="form-inline mb-4 justify-content-center">
                     <label for="areaSelect" class="mr-2">Area:</label>
                     <select name="areaSelect" id="areaSelect" class="form-control mr-2" required>
                         <option value="">--Please choose an area--</option>
@@ -53,24 +53,38 @@
         }
 
         function getData(){
-            let numberOfAreas = 28;
-
-            for(let i = 0; i < numberOfAreas; i++){
                 fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
                 .then(response => response.json())
                 .then(data => {
-                    populateDropdown(data.meals[i])
+                    data.meals.forEach(meal => {
+                        populateDropdown(meal);
+                    })
                 })
                 .catch(error => console.error('Error:', error))  
-            }
+            
         }
 
-        function getMealsByArea(){
-            
+        function updateUI(area){
+            const listItem = document.createElement("li");
+            listItem.textContent = area.strMeal;
+            mealList.appendChild(listItem);
+        }
+
+        function getMealsByArea(event){
+            event.preventDefault();
+            const selectedArea = areaSelect.value;
+            fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedArea}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.meals.forEach(meal => {
+                        updateUI(meal);
+                    })
+                })
         }
 				/* setup and function calls */
         
         const areaSelect = document.getElementById("areaSelect");
+        const mealList = document.getElementById("meal-list");
         getData();
     </script>
 </body>

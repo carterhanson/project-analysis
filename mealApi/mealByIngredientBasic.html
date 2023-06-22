@@ -27,7 +27,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form onsubmit="getMealsByIngredient();" class="form-inline mb-4 justify-content-center">
+                <form onsubmit="getMealsByIngredient(event);" class="form-inline mb-4 justify-content-center">
                     <label for="ingredientInput" class="mr-2">Ingredient:</label>
                     <input type="text" name="ingredientInput" id="ingredientInput" class="form-control mr-2" required>
                     <button type="submit" class="btn btn-primary">Get Meals</button>
@@ -43,7 +43,26 @@
     <script>
         /* function declarations */
 
-				/* setup and function calls */
+        function updateUI(ingredient){
+            const listItem = document.createElement("li");
+            listItem.textContent = ingredient.strMeal;
+            mealList.appendChild(listItem);
+        }
+        function getMealsByIngredient(event){
+            event.preventDefault();
+            const ingredient = ingredientInput.value;
+            fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.meals.forEach(meal => {
+                        updateUI(meal);
+                    })
+                })
+        }
+		/* setup and function calls */
+        const ingredientInput = document.getElementById("ingredientInput");
+        const mealList = document.getElementById("meal-list");
+
     </script>
 </body>
 </html>
