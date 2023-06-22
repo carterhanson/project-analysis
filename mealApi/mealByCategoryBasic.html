@@ -66,10 +66,10 @@
             }
 
             function populateDropdown(meal){
-                let option = document.createElement('option');
+                const option = document.createElement('option');
                 option.value = meal.strCategory;
                 option.textContent = meal.strCategory;
-                categorySelect.appendChild(option)
+                categorySelect.appendChild(option);
             }
 
             function getMealsByCategory(event){

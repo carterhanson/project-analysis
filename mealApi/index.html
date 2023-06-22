@@ -44,7 +44,7 @@
         /* function declarations */
         function getMealDetails(event){
             event.preventDefault();
-            let selectedMeal = mealSelect.value;
+            const selectedMeal = mealSelect.value;
             fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedMeal}`)
                 .then(response => response.json())
                 .then(data => {
@@ -63,14 +63,14 @@
         }
 
         function populateDropdown(meal){
-            let option = document.createElement('option');
+            const option = document.createElement('option');
             option.value = meal.strMeal;
             option.textContent = meal.strMeal;
-            mealSelect.appendChild(option)
+            mealSelect.appendChild(option);
         }
 
         function getData(){
-            let numberOfMeals = 10;
+            const numberOfMeals = 10;
 
             for(let i = 0; i < numberOfMeals; i++){
                 fetch('https://www.themealdb.com/api/json/v1/1/random.php')
@@ -78,9 +78,8 @@
                 .then(data => {
                     populateDropdown(data.meals[0])
                 })
-                .catch(error => console.error('Error:', error))  
+                .catch(error => console.error('Error:', error));
             }
-            
         }
 		/* setup and function calls */
         const form = document.getElementById("meal-form");

@@ -46,26 +46,27 @@
         /* function declarations */
 
         function populateDropdown(meal){
-            let option = document.createElement('option');
+            const option = document.createElement('option');
             option.value = meal.strArea;
             option.textContent = meal.strArea;
-            areaSelect.appendChild(option)
+            areaSelect.appendChild(option);
         }
 
         function getData(){
-                fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+            fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
                 .then(response => response.json())
                 .then(data => {
                     data.meals.forEach(meal => {
                         populateDropdown(meal);
                     })
                 })
-                .catch(error => console.error('Error:', error))  
+                .catch(error => console.error('Error:', error));
             
         }
 
         function updateUI(area){
             const listItem = document.createElement("li");
+            listItem.textContent = '';
             listItem.textContent = area.strMeal;
             mealList.appendChild(listItem);
         }
@@ -80,6 +81,7 @@
                         updateUI(meal);
                     })
                 })
+                .catch(error => console.error('Error:', error));
         }
 				/* setup and function calls */
         
