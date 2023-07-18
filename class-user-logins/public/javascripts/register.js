@@ -28,8 +28,9 @@ async function register(event){
 
     const username = registerForm.username.value;
     const password = registerForm.password.value;
+    const postBody = { username: username, password: password }
 
-    const response = await sendPostRequest('/user/register', { username, password });
+    const response = await sendPostRequest('/user/register', postBody);
 
     document.getElementById('message').textContent = response.message;
 }
