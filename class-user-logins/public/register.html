@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200">
+    <nav class="bg-blue-500 p-4 flex justify-between text-white">
+        <div class="flex space-x-4">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
+        <button id="logout-btn" class="bg-red-500 px-2 py-1 rounded" onclick="logout()">Logout</button>
+    </nav>
+    
+    <h1 class="text-center text-3xl my-6">User Registration</h1>
+    <form id="register-form" class="mx-auto w-1/2" onsubmit="register(event)">
+        <label for="register-username" class="block my-2">Username:</label>
+        <input type="text" id="register-username" name="username" required class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+        <label for="register-password" class="block my-2">Password:</label>
+        <input type="password" id="register-password" name="password" required class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+        <button type="submit" class="w-full p-2 my-2 bg-blue-500 text-white rounded">Register</button>
+    </form>
+    <div id="message" class="text-center text-xl"></div>
+    <script src="/javascripts/register.js"></script>
+</body>
+</html>
