@@ -65,6 +65,37 @@ router.post('/login', async (req, res) => {
     res.json({ message: 'Logged in successfully' });
 });
 
+router.put('/update', async (req, res) => {
+
+    const username = req.body.email;
+    const password = req.body.password;
+    
+    if(!req.session || !req.session.user){
+        return res.status(401).json({message: "Not logged in"});
+    }
+
+    //find user
+    const user = await User.findByPk(req.session.user.id);
+    if(!user){
+        return res.status(404).json({message: "User not found"});
+    }
+
+    if(username){
+        user.username = username;
+    }
+
+    if(password){
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+    }
+
+    //save the updates
+    await user.save();
+
+    res.json({message: 'update successfull'});
+
+})
+
 // User Logout Route
 router.post('/logout', (req, res) => {
     // Destroy the session
@@ -76,6 +107,8 @@ router.post('/logout', (req, res) => {
         }
     });
 });
+
+
 
 
 
