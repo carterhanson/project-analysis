@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+<body class="bg-gray-200">
+    <nav class="bg-blue-500 p-4 flex justify-between text-white">
+        <div class="flex space-x-4">
+            <a href="index.html">Home</a>
+            <a href="employees.html">Employee List</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
+        <button id="logout-btn" onclick="logout()" class="bg-red-500 px-2 py-1 rounded">Logout</button>
+    </nav>
+    <div class="container mt-10">
+        <h1 class="text-center text-4xl mb-4">Employees</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-4">
+                    <select id="employee-select" class="custom-select">
+                        <!-- Categories will be added here by JavaScript -->
+                    </select>
+                    <div class="input-group-append">
+                        <button onclick="getEmployeeData()" class="btn btn-primary">Get Employee</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center items-center">
+            <div id="message" class="row">
+                <!-- Message will be inserted here by JavaScript -->
+            </div>
+        </div>
+        
+
+        <h1 class="text-center text-3xl my-6">Employee Update</h1>
+        <form id="updateForm" class="mx-auto w-1/2" onsubmit="updateEmployee(event)">
+            <input type="hidden" id="employeeId" name="employeeId" value="">
+
+            <label for="employeeUsername" class="block my-2">Email:</label>
+            <input type="email" id="employeeUsername" name="employeeUsername" class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+            
+            <label for="employeePassword" class="block my-2">New Password:</label>
+            <input type="password" id="employeePassword" name="employeePassword" placeholder="Enter new password for employee" class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+            
+            <label for="isEmployed">Check me:</label>
+            <input type="checkbox" name="isEmployed" id="isEmployed">
+
+            <button type="submit" name="submitButton" class="w-full p-2 my-2 bg-blue-500 text-white rounded">Update</button>
+        </form>
+        <div id="message" class="text-center text-xl"></div>
+
+    </div>
+    <script src="/javascripts/employees.js"></script>
+</body>
+</html>
