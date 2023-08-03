@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var seedRouter = require('./routes/SeedController');
 const userController = require('./routes/UserController');
+const User = require('./models/User');
 
 // this will execute the associations.js file
 require('./associations'); 
@@ -46,7 +47,7 @@ sequelize.sync()
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 // app.use('/seed', seedRouter);
-app.use('user', userController)
+app.use('/user', userController)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

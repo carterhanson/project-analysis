@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
     },
     isEmployeed: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: true
     }
 });
 
