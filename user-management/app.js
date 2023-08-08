@@ -45,7 +45,7 @@ sequelize.sync()
     });
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 // app.use('/seed', seedRouter);
 app.use('/user', userController)
 

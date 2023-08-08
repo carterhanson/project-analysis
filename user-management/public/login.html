@@ -15,7 +15,7 @@
         <button id="logout-btn" onclick="logout()" class="bg-red-500 px-2 py-1 rounded">Logout</button>
     </nav>
     <h1 class="text-center text-3xl my-6">User Login</h1>
-    <form id="login-form" class="mx-auto w-1/2">
+    <form id="login-form" class="mx-auto w-1/2" onsubmit="login(event)">
         <label for="login-username" class="block my-2">Username:</label>
         <input type="text" id="login-username" name="username" required class="w-full p-2 my-2 border-2 border-gray-300 rounded">
         <label for="login-password" class="block my-2">Password:</label>

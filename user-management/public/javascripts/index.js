@@ -1,6 +1,6 @@
 async function logout() {
     try {
-        const response = await fetch('/users/logout', {
+        const response = await fetch('/user/logout', {
             method: 'POST',
             credentials: 'include', // This is necessary to include the session cookie with the request
         });
@@ -20,7 +20,7 @@ async function getData(){
     const messageElement = document.getElementById('message');
 
     // Send a GET request to the /users/info route
-    const response = await fetch('/users/info');
+    const response = await fetch('/user/info');
 
     if (response.ok) {
         // If the response is ok (status in the range 200-299), then the user is logged in

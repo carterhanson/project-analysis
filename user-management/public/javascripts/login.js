@@ -9,26 +9,11 @@
 */
 const loginForm = document.getElementById("login-form");
 
-const checkLogin = async () => {
-    try {
-        const response = await fetch('/user/info');
-        const data = await response.json();
-        
-        if (response.status === 200) {
-            // User is logged in
-            const loginForm = document.getElementById('login-form');
-            const message = document.createElement('p');
-            message.textContent = `You are already logged in as ${data.username}.`;
-            loginForm.parentNode.replaceChild(message, loginForm);
-        }
-    } catch (error) {
-        // If there's an error or user is not logged in, do nothing
-    }
-};
 
-(async function() {
-    await checkLogin();
-})();
+
+// (async function() {
+//     await checkLogin();
+// })();
 
 async function sendPostRequest(url, data) {
     const response = await fetch(url, {
@@ -56,6 +41,7 @@ async function login(event){
 async function logout(){
     const logoutResponse = await fetch('/user/logout', { method: 'POST' });
     if (logoutResponse.ok) {
+        
         // If the logout was successful, redirect the user to the login page
         window.location.href = 'login.html';
     } else {
