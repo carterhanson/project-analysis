@@ -33,4 +33,26 @@ router.post('/register', async (req, res) => {
     res.json({message: "Successful registration", newUser});
 })
 
+router.post('/login', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    // Find user
+    const user = await User.findOne({ where: { username } });
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check password
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+        return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Initialize user session
+    req.session.user = user;
+
+    res.json({ message: 'Logged in successfully' });
+});
+
 module.exports = router;
