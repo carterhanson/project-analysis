@@ -19,7 +19,7 @@ function isLoggedIn(req){
 }
 
 function isLoggedInAndManager(req){    
-    return req.session && req.session.user;
+    return isLoggedIn(req) && req.session.user.role == MANAGER_ROLE;
     
 }
 

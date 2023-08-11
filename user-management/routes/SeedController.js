@@ -36,9 +36,9 @@ const emailAddresses = [
     for (let i = 0; i < TOT_NUM_USERS; i++) {
       usersData.push({
         username: emailAddresses[i], // Use email addresses as usernames
-        password: `password${i + 1}`,
+        password: await bcrypt.hash("password", 10), 
         isEmployeed: true, // Assuming all users are employed
-        roleId: roles[i % 2].id, // Alternating between Manager and Employee roles
+        roleId: i < 2 ? roles[1].id : roles[2].id,
       });
     }
   
