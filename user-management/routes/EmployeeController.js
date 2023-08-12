@@ -52,6 +52,31 @@ router.get('/', async (req, res) => {
 
     */
 
+    try {
+        if (!isLoggedIn(req)) {
+            return res.status(401).send('You are not logged in.');
+        }
+
+        if (isLoggedInAndManager(req)) {
+            // Retrieve all Users except the logged-in user
+            const loggedInUserId = req.session.user.id;
+
+            const users = await User.findAll({
+                where: {
+                    id: { [Op.ne]: loggedInUserId } // Exclude the logged-in user
+                },
+                attributes: ['id', 'username']
+            });
+
+            return res.status(200).json(users);
+        } else {
+            return res.status(403).send('You do not have permission to view this page.');
+        }
+    } catch (error) {
+        console.error('Error retrieving user data:', error);
+        return res.status(500).send('Error retrieving user data');
+    }
+
 });
 
 router.get('/:id', async (req, res) => {
