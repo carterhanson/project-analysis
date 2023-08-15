@@ -20,7 +20,7 @@ const emailAddresses = [
     'marywilliams@website.net',
   ];
   
-  // Helper function to create roles
+  
   async function createRoles() {
     await Role.bulkCreate([
       { title: 'Manager' },
@@ -28,17 +28,18 @@ const emailAddresses = [
     ]);
   }
   
-  // Helper function to create users and associate them with roles
+
   async function createUsersWithRoles() {
     const roles = await Role.findAll();
-  
+    
+    
     const usersData = [];
     for (let i = 0; i < TOT_NUM_USERS; i++) {
       usersData.push({
-        username: emailAddresses[i], // Use email addresses as usernames
+        username: emailAddresses[i], 
         password: await bcrypt.hash("password", 10), 
-        isEmployeed: true, // Assuming all users are employed
-        roleId: i < 2 ? roles[1].id : roles[2].id,
+        isEmployeed: true, 
+        roleId: i < 2 ? roles[0].id : roles[1].id,
       });
     }
   

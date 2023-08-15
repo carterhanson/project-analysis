@@ -18,13 +18,28 @@ function isLoggedIn(req){
     return req.session && req.session.user;
 }
 
-function isLoggedInAndManager(req){    
-    return isLoggedIn(req) && req.session.user.role == MANAGER_ROLE;
-    
+function isLoggedInAndManager(req) {
+
+    return isLoggedIn(req) && req.session.user.roleId === MANAGER_ROLE;
 }
 
 async function updateUserFields(existingUser, newUserData){
-    
+    if (newUserData.username) {
+        existingUser.username = newUserData.username;
+    }
+
+    if (newUserData.password) {
+        const hashedPassword = await bcrypt.hash(newUserData.password, 10);
+        existingUser.password = hashedPassword;
+    }
+
+    if (newUserData.isEmployed !== undefined) {
+        existingUser.isEmployed = newUserData.isEmployed;
+    }
+
+    await existingUser.save();
+
+    console.log('User updated successfully');
 }
 
 router.get('/', async (req, res) => {
@@ -51,19 +66,17 @@ router.get('/', async (req, res) => {
                 not a manager.
 
     */
-
     try {
         if (!isLoggedIn(req)) {
             return res.status(401).send('You are not logged in.');
         }
 
         if (isLoggedInAndManager(req)) {
-            // Retrieve all Users except the logged-in user
             const loggedInUserId = req.session.user.id;
 
             const users = await User.findAll({
                 where: {
-                    id: { [Op.ne]: loggedInUserId } // Exclude the logged-in user
+                    id: { [Op.ne]: loggedInUserId }
                 },
                 attributes: ['id', 'username']
             });
@@ -102,8 +115,32 @@ router.get('/:id', async (req, res) => {
                     not logged in.
 
     */
+    try {
+        if (!isLoggedIn(req)) {
+            return res.status(401).send('You are not logged in.');
+        }
 
+        if (isLoggedInAndManager(req)) {
+            const requestedUserId = req.params.id;
+            
+            const user = await User.findOne({
+                where: { id: requestedUserId }
+            });
+
+            if (user) {
+                return res.status(200).json(user);
+            } else {
+                return res.status(404).send('User not found.');
+            }
+        } else {
+            return res.status(403).send('You do not have permission to view this page.');
+        }
+    } catch (error) {
+        console.error('Error retrieving user data:', error);
+        return res.status(500).send('Error retrieving user data');
+    }
 });
+
 
 router.put('/:id', async (req, res) => {
 
@@ -152,6 +189,39 @@ router.put('/:id', async (req, res) => {
 
     */
     
+    const username = req.body.username;
+    const password = req.body.password;
+    const isEmployed = req.body.isEmployed;
+
+    try {
+        
+        const userId = req.params.id;
+        const existingUser = await User.findByPk(userId);
+
+        if (!existingUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+    
+        if (username !== undefined) {
+            existingUser.username = username;
+        }
+        if (password !== undefined) {
+            existingUser.password = await bcrypt.hash(password, 10);
+        }
+        if (isEmployed !== undefined) {
+            existingUser.isEmployed = isEmployed;
+        }
+
+        
+        await updateUserFields(existingUser, req.body);
+        await existingUser.save();
+
+        res.status(200).json({ message: 'Employee updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update employee' });
+    }
 
 });
 

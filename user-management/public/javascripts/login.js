@@ -7,13 +7,10 @@
 	Implement other login functions as well. Use what we have done in class
 	as a guide.
 */
+
+const messageElement = document.getElementById("message");
 const loginForm = document.getElementById("login-form");
 
-
-
-// (async function() {
-//     await checkLogin();
-// })();
 
 async function sendPostRequest(url, data) {
     const response = await fetch(url, {
@@ -27,6 +24,20 @@ async function sendPostRequest(url, data) {
     return response.json();
 }
 
+async function checkLogin() {
+    const response = await fetch('/user/info', {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        loginForm.style.display = 'none';
+        messageElement.textContent = 'You are already logged in.';
+    } else {
+        loginForm.style.display = 'block';
+    }
+}
+
 async function login(event){
     event.preventDefault();
 
@@ -34,6 +45,7 @@ async function login(event){
     const password = loginForm.password.value;
 
     const response = await sendPostRequest('/user/login', { username, password });
+
 
     document.getElementById('message').textContent = response.message;
 }
@@ -49,3 +61,7 @@ async function logout(){
         console.error('Logout failed');
     }
 }
+
+(async function() {
+    await checkLogin();
+})();

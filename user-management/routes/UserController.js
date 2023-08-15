@@ -80,7 +80,6 @@ router.put('/update', async (req, res) => {
         user.password = hashedPassword;
     }
 
-    //save the updates
     await user.save();
 
     res.json({message: 'update successfull'});
